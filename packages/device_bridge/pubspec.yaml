@@ -1,0 +1,24 @@
+name: device_bridge
+description: "Small Android bridge for checks and actions the Flutter plugins do not cover (full-screen intent, channel state, safe restart, APK install)."
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.13.4
+  flutter: ">=3.38.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.mattel.device_bridge
+        pluginClass: DeviceBridgePlugin

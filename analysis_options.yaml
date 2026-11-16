@@ -1,0 +1,38 @@
+# Shared analyzer config for every workspace member (each member includes this file).
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-raw-types: true
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.config.dart"
+    - "**/*.module.dart"
+    - "**/l10n/generated/**"
+    - "**/build/**"
+  errors:
+    # Generated code and builder annotations rely on these.
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    always_declare_return_types: true
+    avoid_dynamic_calls: true
+    avoid_print: true
+    cancel_subscriptions: true
+    close_sinks: true
+    curly_braces_in_flow_control_structures: true
+    directives_ordering: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_final_locals: true
+    prefer_single_quotes: true
+    require_trailing_commas: true
+    unawaited_futures: true
+    unnecessary_await_in_return: true
+    use_super_parameters: true
+    # Dart 3.13 private named parameters (`{required this._x}`) are new; keep
+    # the classic `: _x = x` initializer style until the team adopts them.
+    prefer_initializing_formals: false

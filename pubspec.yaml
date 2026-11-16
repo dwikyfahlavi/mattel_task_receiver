@@ -1,0 +1,21 @@
+﻿# Workspace root. Not an app: run apps from apps/<name> (see the Makefile).
+name: mattel_task_receiver_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.13.4
+
+workspace:
+  - apps/app_watch
+  - apps/app_mobile
+  - packages/core
+  - packages/device_bridge
+  - packages/app_shell
+  - packages/camera_scanner
+  - packages/ui_kit
+  - packages/feature_auth
+  - packages/feature_availability
+  - packages/feature_task
+
+dev_dependencies:
+  flutter_lints: ^6.0.0

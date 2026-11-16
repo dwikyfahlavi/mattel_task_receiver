@@ -1,0 +1,110 @@
+# CI/CD (doc 19.3). Secrets live in the repository secret store; see docs/SETUP.md.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ["v*"]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Keep in sync with the SDK used locally (fvm flutter --version).
+  FLUTTER_VERSION: "3.47.5"
+  # CI uses the action's SDK instead of FVM.
+  FLUTTER: flutter
+  DART: dart
+
+jobs:
+  verify:
+    name: analyze + test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Cache build_runner outputs
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/.dart_tool/build
+          key: build-runner-${{ hashFiles('**/pubspec.lock', '**/build.yaml') }}
+      - run: make bootstrap codegen l10n analyze test
+      - name: Generated code is committed and up to date
+        run: git diff --exit-code -- '*.g.dart' '*.freezed.dart' '*.config.dart' '*.module.dart' 'packages/ui_kit/lib/l10n/generated'
+
+  build-dev:
+    name: dev APKs
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [watch, mobile]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "17" }
+      - uses: subosito/flutter-action@v2
+        with: { flutter-version: "${{ env.FLUTTER_VERSION }}", channel: stable, cache: true }
+      - name: Firebase config (dev)
+        env:
+          GOOGLE_SERVICES_DEV: ${{ matrix.app == 'watch' && secrets.WATCH_GOOGLE_SERVICES_DEV || secrets.MOBILE_GOOGLE_SERVICES_DEV }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES_DEV" ]; then
+            mkdir -p apps/app_${{ matrix.app }}/android/app/src/dev
+            echo "$GOOGLE_SERVICES_DEV" | base64 -d > apps/app_${{ matrix.app }}/android/app/src/dev/google-services.json
+          fi
+      - run: make bootstrap
+      - run: make build-debug APP=${{ matrix.app }} ENV=dev
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app_${{ matrix.app }}-dev-debug
+          path: apps/app_${{ matrix.app }}/build/app/outputs/flutter-apk/app-dev-debug.apk
+
+  release:
+    name: signed release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: production
+    strategy:
+      matrix:
+        app: [watch, mobile]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "17" }
+      - uses: subosito/flutter-action@v2
+        with: { flutter-version: "${{ env.FLUTTER_VERSION }}", channel: stable, cache: true }
+      - name: Signing and Firebase config
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          GOOGLE_SERVICES_PROD: ${{ matrix.app == 'watch' && secrets.WATCH_GOOGLE_SERVICES_PROD || secrets.MOBILE_GOOGLE_SERVICES_PROD }}
+        run: |
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          echo "ANDROID_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          mkdir -p apps/app_${{ matrix.app }}/android/app/src/prod
+          echo "$GOOGLE_SERVICES_PROD" | base64 -d > apps/app_${{ matrix.app }}/android/app/src/prod/google-services.json
+      - uses: shorebirdtech/setup-shorebird@v1
+        with: { cache: true }
+      - run: make bootstrap
+      - name: Shorebird release (builds the signed prod APK)
+        env:
+          SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: >
+          make shorebird-release APP=${{ matrix.app }} ENV=prod
+          DEFINES="--dart-define=API_BASE_URL=${{ vars.PROD_API_BASE_URL }} --dart-define=CERT_PINS=${{ vars.PROD_CERT_PINS }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app_${{ matrix.app }}-prod-release
+          path: apps/app_${{ matrix.app }}/build/app/outputs/**/*.apk

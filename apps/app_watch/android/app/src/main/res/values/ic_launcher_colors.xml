@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#FFFFFF</color>
+    <!-- Accent of the task notification (brand red, AppColors.brand). -->
+    <color name="notification_accent">#E81C2C</color>
+</resources>

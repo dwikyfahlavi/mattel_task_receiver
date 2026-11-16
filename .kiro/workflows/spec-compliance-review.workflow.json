@@ -1,0 +1,18 @@
+{
+  "name": "spec-compliance-review",
+  "description": "Read-only review of the current diff (or the whole repo) against the specification, the architecture rules and DECISIONS.md. Writes a findings report.",
+  "inputs": {
+    "target": {
+      "description": "What to review: a git range such as `main..HEAD`, or `all` for the whole codebase.",
+      "default": "main..HEAD"
+    }
+  },
+  "steps": [
+    {
+      "type": "step",
+      "id": "review",
+      "agent": "semantic_reviewer",
+      "prompt": "Review {{target}} of the Mattel Task Receiver monorepo (workspace root). If the target is a git range, review `git diff {{target}}`; if it is `all`, review packages/ and apps/.\n\nCheck the changes against, in this order of authority: docs/DECISIONS.md, docs/project_main_documentation.md (spec), .kiro/steering/architecture-rules.md and .kiro/steering/security.md. Look specifically for:\n- `DateTime.now()` in app code (only AppClock may read time); display times not in Asia/Jakarta.\n- Network actions without `droppable()`; UI moving state before server confirmation (except Check Out / Selesai via OutboxService).\n- Task push events handled outside TaskSessionBloc / TaskEventProcessor; second popup while Assigned or In Progress; Check Out or logout allowed while In Progress.\n- Alerts, timers, subscriptions not stopped in close()/dispose().\n- Session ended anywhere other than SessionCubit.end(); incomplete wipe (FCM token, secure storage, Drift session tables).\n- FCM background handler importing feature packages or GetIt.\n- Secrets/tokens/QR payloads logged or stored outside SecureStore; tokens in push payloads; weakened TLS or pinning.\n- Hard-coded UI strings or colors; watch buttons below 64 dp; truncated machine/area/problem text; screens without widget tests at all TestScreens sizes.\n- Dependency edges against `core <- ui_kit <- feature_auth, feature_task <- feature_availability <- app_shell <- apps`; camera/ML Kit reaching the watch app.\n- API changes not reflected in docs/api_contract.md and the fake backend.\n\nWrite the report to `.agents/reviews/spec-compliance-<date>.md` with one entry per finding: file:line, rule violated (cite the section), severity (blocker / should-fix / nit), and a concrete fix. Do not modify code."
+    }
+  ]
+}

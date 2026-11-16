@@ -1,0 +1,31 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Keep-alive service for the work-order socket (no push from the backend). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <application>
+        <!-- Shares the downloaded APK with the system installer (in-app update fallback, doc 13.2). -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.device_bridge.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/device_bridge_file_paths" />
+        </provider>
+
+        <!-- Holds foreground priority while a technician is signed in so the
+             Socket.IO connection keeps receiving work orders with the screen
+             off. Stops with the task: without the activity there is no engine. -->
+        <service
+            android:name="com.mattel.device_bridge.KeepAliveService"
+            android:exported="false"
+            android:stopWithTask="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Persistent connection that delivers time-critical work orders (60 second response window); the backend has no push notifications." />
+        </service>
+    </application>
+</manifest>

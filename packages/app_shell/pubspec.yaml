@@ -1,0 +1,38 @@
+name: app_shell
+description: "Shared app composition for the watch and mobile apps: DI, version gate, router guard, lifecycle and task overlay."
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.13.4
+  flutter: ">=3.38.0"
+
+dependencies:
+  core:
+    path: ../core
+  feature_auth:
+    path: ../feature_auth
+  feature_availability:
+    path: ../feature_availability
+  feature_task:
+    path: ../feature_task
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.1
+  flutter_localizations:
+    sdk: flutter
+  get_it: ^9.3.0
+  go_router: ^18.1.3
+  injectable: ^3.0.0
+  lucide_icons_flutter: ^4.0.2
+  ui_kit:
+    path: ../ui_kit
+
+dev_dependencies:
+  bloc_test: ^10.0.0
+  build_runner: ^2.16.1
+  flutter_test:
+    sdk: flutter
+  injectable_generator: ^3.1.3
+  mocktail: ^1.0.5

@@ -1,0 +1,1496 @@
+{
+    "openapi":  "3.0.0",
+    "info":  {
+                 "title":  "Mattel Backend API",
+                 "description":  "Mattel Manufacturing Execution System API - Includes Dashboard, Chat, Dispatcher, and Auth endpoints",
+                 "version":  "1.0.0",
+                 "contact":  {
+
+                             }
+             },
+    "servers":  [
+
+                ],
+    "paths":  {
+                  "/technicians/me/state":  {
+                                                "get":  {
+                                                            "operationId":  "TechnicianMobileController_state",
+                                                            "parameters":  [
+                                                                               {
+                                                                                   "name":  "X-Device-Id",
+                                                                                   "in":  "header",
+                                                                                   "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                   "required":  false,
+                                                                                   "schema":  {
+                                                                                                  "type":  "string"
+                                                                                              }
+                                                                               },
+                                                                               {
+                                                                                   "name":  "X-Timestamp",
+                                                                                   "in":  "header",
+                                                                                   "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                   "required":  false,
+                                                                                   "schema":  {
+                                                                                                  "type":  "string"
+                                                                                              }
+                                                                               },
+                                                                               {
+                                                                                   "name":  "X-Nonce",
+                                                                                   "in":  "header",
+                                                                                   "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                   "required":  false,
+                                                                                   "schema":  {
+                                                                                                  "type":  "string"
+                                                                                              }
+                                                                               },
+                                                                               {
+                                                                                   "name":  "X-Signature",
+                                                                                   "in":  "header",
+                                                                                   "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                   "required":  false,
+                                                                                   "schema":  {
+                                                                                                  "type":  "string"
+                                                                                              }
+                                                                               }
+                                                                           ],
+                                                            "responses":  {
+                                                                              "200":  {
+                                                                                          "description":  ""
+                                                                                      },
+                                                                              "401":  {
+                                                                                          "description":  "Unauthorized"
+                                                                                      }
+                                                                          },
+                                                            "security":  [
+                                                                             {
+                                                                                 "technician-bearer":  [
+
+                                                                                                       ]
+                                                                             }
+                                                                         ],
+                                                            "summary":  "Current state: check-in status, the assignment waiting for an answer, the active job, paired watches (phone)",
+                                                            "tags":  [
+                                                                         "Technician Dispatcher - Technician Mobile"
+                                                                     ]
+                                                        }
+                                            },
+                  "/technicians/me/profile":  {
+                                                  "get":  {
+                                                              "description":  "The phone number is not returned (it is the temporary login password); only a masked form is",
+                                                              "operationId":  "TechnicianMobileController_profile",
+                                                              "parameters":  [
+                                                                                 {
+                                                                                     "name":  "X-Device-Id",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Timestamp",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Nonce",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Signature",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 }
+                                                                             ],
+                                                              "responses":  {
+                                                                                "200":  {
+                                                                                            "description":  ""
+                                                                                        },
+                                                                                "401":  {
+                                                                                            "description":  "Unauthorized"
+                                                                                        }
+                                                                            },
+                                                              "security":  [
+                                                                               {
+                                                                                   "technician-bearer":  [
+
+                                                                                                         ]
+                                                                               }
+                                                                           ],
+                                                              "summary":  "My profile",
+                                                              "tags":  [
+                                                                           "Technician Dispatcher - Technician Mobile"
+                                                                       ]
+                                                          }
+                                              },
+                  "/technicians/me/attendance":  {
+                                                     "get":  {
+                                                                 "operationId":  "TechnicianMobileController_attendance",
+                                                                 "parameters":  [
+                                                                                    {
+                                                                                        "name":  "X-Device-Id",
+                                                                                        "in":  "header",
+                                                                                        "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                        "required":  false,
+                                                                                        "schema":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "X-Timestamp",
+                                                                                        "in":  "header",
+                                                                                        "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                        "required":  false,
+                                                                                        "schema":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "X-Nonce",
+                                                                                        "in":  "header",
+                                                                                        "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                        "required":  false,
+                                                                                        "schema":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "X-Signature",
+                                                                                        "in":  "header",
+                                                                                        "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                        "required":  false,
+                                                                                        "schema":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "from",
+                                                                                        "required":  false,
+                                                                                        "in":  "query",
+                                                                                        "description":  "Shifts on or after this day (YYYY-MM-DD)",
+                                                                                        "schema":  {
+                                                                                                       "example":  "2026-11-01",
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "to",
+                                                                                        "required":  false,
+                                                                                        "in":  "query",
+                                                                                        "description":  "Shifts on or before this day (YYYY-MM-DD)",
+                                                                                        "schema":  {
+                                                                                                       "example":  "2026-11-30",
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "page",
+                                                                                        "required":  false,
+                                                                                        "in":  "query",
+                                                                                        "schema":  {
+                                                                                                       "default":  1,
+                                                                                                       "example":  1,
+                                                                                                       "type":  "number"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "perPage",
+                                                                                        "required":  false,
+                                                                                        "in":  "query",
+                                                                                        "description":  "At most 100",
+                                                                                        "schema":  {
+                                                                                                       "default":  20,
+                                                                                                       "example":  20,
+                                                                                                       "type":  "number"
+                                                                                                   }
+                                                                                    }
+                                                                                ],
+                                                                 "responses":  {
+                                                                                   "200":  {
+                                                                                               "description":  ""
+                                                                                           },
+                                                                                   "401":  {
+                                                                                               "description":  "Unauthorized"
+                                                                                           }
+                                                                               },
+                                                                 "security":  [
+                                                                                  {
+                                                                                      "technician-bearer":  [
+
+                                                                                                            ]
+                                                                                  }
+                                                                              ],
+                                                                 "summary":  "My attendance history: one row per shift, newest first, with paging",
+                                                                 "tags":  [
+                                                                              "Technician Dispatcher - Technician Mobile"
+                                                                          ]
+                                                             }
+                                                 },
+                  "/technicians/me/check-in":  {
+                                                   "post":  {
+                                                                "operationId":  "TechnicianMobileController_checkIn",
+                                                                "parameters":  [
+                                                                                   {
+                                                                                       "name":  "X-Device-Id",
+                                                                                       "in":  "header",
+                                                                                       "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                       "required":  false,
+                                                                                       "schema":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                   },
+                                                                                   {
+                                                                                       "name":  "X-Timestamp",
+                                                                                       "in":  "header",
+                                                                                       "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                       "required":  false,
+                                                                                       "schema":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                   },
+                                                                                   {
+                                                                                       "name":  "X-Nonce",
+                                                                                       "in":  "header",
+                                                                                       "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                       "required":  false,
+                                                                                       "schema":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                   },
+                                                                                   {
+                                                                                       "name":  "X-Signature",
+                                                                                       "in":  "header",
+                                                                                       "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                       "required":  false,
+                                                                                       "schema":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                   }
+                                                                               ],
+                                                                "responses":  {
+                                                                                  "200":  {
+                                                                                              "description":  "outcome is CHECKED_IN, RESUMED (checked out earlier in this shift) or ALREADY_CHECKED_IN"
+                                                                                          },
+                                                                                  "401":  {
+                                                                                              "description":  "Unauthorized"
+                                                                                          }
+                                                                              },
+                                                                "security":  [
+                                                                                 {
+                                                                                     "technician-bearer":  [
+
+                                                                                                           ]
+                                                                                 }
+                                                                             ],
+                                                                "summary":  "Check in for the current shift",
+                                                                "tags":  [
+                                                                             "Technician Dispatcher - Technician Mobile"
+                                                                         ]
+                                                            }
+                                               },
+                  "/technicians/me/check-out":  {
+                                                    "post":  {
+                                                                 "operationId":  "TechnicianMobileController_checkOut",
+                                                                 "parameters":  [
+                                                                                    {
+                                                                                        "name":  "X-Device-Id",
+                                                                                        "in":  "header",
+                                                                                        "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                        "required":  false,
+                                                                                        "schema":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "X-Timestamp",
+                                                                                        "in":  "header",
+                                                                                        "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                        "required":  false,
+                                                                                        "schema":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "X-Nonce",
+                                                                                        "in":  "header",
+                                                                                        "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                        "required":  false,
+                                                                                        "schema":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    },
+                                                                                    {
+                                                                                        "name":  "X-Signature",
+                                                                                        "in":  "header",
+                                                                                        "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                        "required":  false,
+                                                                                        "schema":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                    }
+                                                                                ],
+                                                                 "responses":  {
+                                                                                   "200":  {
+                                                                                               "description":  "outcome is CHECKED_OUT or NOT_CHECKED_IN"
+                                                                                           },
+                                                                                   "401":  {
+                                                                                               "description":  "Unauthorized"
+                                                                                           }
+                                                                               },
+                                                                 "security":  [
+                                                                                  {
+                                                                                      "technician-bearer":  [
+
+                                                                                                            ]
+                                                                                  }
+                                                                              ],
+                                                                 "summary":  "Check out. Attendance only, the login session stays open",
+                                                                 "tags":  [
+                                                                              "Technician Dispatcher - Technician Mobile"
+                                                                          ]
+                                                             }
+                                                },
+                  "/technicians/me/unpair":  {
+                                                 "post":  {
+                                                              "description":  "Only for a watch session. Unlike check-out, the session ends even if the technician was not checked in.",
+                                                              "operationId":  "TechnicianMobileController_unpair",
+                                                              "parameters":  [
+                                                                                 {
+                                                                                     "name":  "X-Device-Id",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Timestamp",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Nonce",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Signature",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 }
+                                                                             ],
+                                                              "responses":  {
+                                                                                "200":  {
+                                                                                            "description":  "Watch unpaired. checked_out is false when the technician was not checked in"
+                                                                                        },
+                                                                                "400":  {
+                                                                                            "description":  "Not a shared watch session"
+                                                                                        },
+                                                                                "401":  {
+                                                                                            "description":  "Unauthorized"
+                                                                                        }
+                                                                            },
+                                                              "security":  [
+                                                                               {
+                                                                                   "technician-bearer":  [
+
+                                                                                                         ]
+                                                                               }
+                                                                           ],
+                                                              "summary":  "Unpair the shared watch: check the technician out and end the watch session",
+                                                              "tags":  [
+                                                                           "Technician Dispatcher - Technician Mobile"
+                                                                       ]
+                                                          }
+                                             },
+                  "/technicians/me/devices":  {
+                                                  "get":  {
+                                                              "operationId":  "TechnicianMobileController_devices",
+                                                              "parameters":  [
+                                                                                 {
+                                                                                     "name":  "X-Device-Id",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Timestamp",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Nonce",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "name":  "X-Signature",
+                                                                                     "in":  "header",
+                                                                                     "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                     "required":  false,
+                                                                                     "schema":  {
+                                                                                                    "type":  "string"
+                                                                                                }
+                                                                                 }
+                                                                             ],
+                                                              "responses":  {
+                                                                                "401":  {
+                                                                                            "description":  "Unauthorized"
+                                                                                        },
+                                                                                "403":  {
+                                                                                            "description":  "Not a personal phone session"
+                                                                                        }
+                                                                            },
+                                                              "security":  [
+                                                                               {
+                                                                                   "technician-bearer":  [
+
+                                                                                                         ]
+                                                                               }
+                                                                           ],
+                                                              "summary":  "Watches currently paired to this technician (phone only)",
+                                                              "tags":  [
+                                                                           "Technician Dispatcher - Technician Mobile"
+                                                                       ]
+                                                          }
+                                              },
+                  "/technicians/me/devices/{sessionId}/unpair":  {
+                                                                     "post":  {
+                                                                                  "operationId":  "TechnicianMobileController_unpairDevice",
+                                                                                  "parameters":  [
+                                                                                                     {
+                                                                                                         "name":  "X-Device-Id",
+                                                                                                         "in":  "header",
+                                                                                                         "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                                         "required":  false,
+                                                                                                         "schema":  {
+                                                                                                                        "type":  "string"
+                                                                                                                    }
+                                                                                                     },
+                                                                                                     {
+                                                                                                         "name":  "X-Timestamp",
+                                                                                                         "in":  "header",
+                                                                                                         "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                                         "required":  false,
+                                                                                                         "schema":  {
+                                                                                                                        "type":  "string"
+                                                                                                                    }
+                                                                                                     },
+                                                                                                     {
+                                                                                                         "name":  "X-Nonce",
+                                                                                                         "in":  "header",
+                                                                                                         "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                                         "required":  false,
+                                                                                                         "schema":  {
+                                                                                                                        "type":  "string"
+                                                                                                                    }
+                                                                                                     },
+                                                                                                     {
+                                                                                                         "name":  "X-Signature",
+                                                                                                         "in":  "header",
+                                                                                                         "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                                         "required":  false,
+                                                                                                         "schema":  {
+                                                                                                                        "type":  "string"
+                                                                                                                    }
+                                                                                                     },
+                                                                                                     {
+                                                                                                         "name":  "sessionId",
+                                                                                                         "required":  true,
+                                                                                                         "in":  "path",
+                                                                                                         "schema":  {
+                                                                                                                        "type":  "string"
+                                                                                                                    }
+                                                                                                     }
+                                                                                                 ],
+                                                                                  "responses":  {
+                                                                                                    "200":  {
+                                                                                                                "description":  "Watch unpaired. checked_out is false when the technician was not checked in"
+                                                                                                            },
+                                                                                                    "401":  {
+                                                                                                                "description":  "Unauthorized"
+                                                                                                            },
+                                                                                                    "403":  {
+                                                                                                                "description":  "Not a personal phone session"
+                                                                                                            },
+                                                                                                    "404":  {
+                                                                                                                "description":  "No such paired watch"
+                                                                                                            }
+                                                                                                },
+                                                                                  "security":  [
+                                                                                                   {
+                                                                                                       "technician-bearer":  [
+
+                                                                                                                             ]
+                                                                                                   }
+                                                                                               ],
+                                                                                  "summary":  "Unpair one of this technician\u0027s watches from the phone: checks the technician out and ends that watch session",
+                                                                                  "tags":  [
+                                                                                               "Technician Dispatcher - Technician Mobile"
+                                                                                           ]
+                                                                              }
+                                                                 },
+                  "/technician-auth/login":  {
+                                                 "post":  {
+                                                              "operationId":  "TechnicianAuthController_login",
+                                                              "parameters":  [
+
+                                                                             ],
+                                                              "requestBody":  {
+                                                                                  "required":  true,
+                                                                                  "content":  {
+                                                                                                  "application/json":  {
+                                                                                                                           "schema":  {
+                                                                                                                                          "$ref":  "#/components/schemas/TechnicianLoginDto"
+                                                                                                                                      }
+                                                                                                                       }
+                                                                                              }
+                                                                              },
+                                                              "responses":  {
+                                                                                "200":  {
+                                                                                            "description":  "Login successful"
+                                                                                        },
+                                                                                "401":  {
+                                                                                            "description":  "Invalid KPK or password"
+                                                                                        },
+                                                                                "429":  {
+                                                                                            "description":  "Too many failed login attempts"
+                                                                                        }
+                                                                            },
+                                                              "summary":  "Technician login with KPK and phone number (temporary credential)",
+                                                              "tags":  [
+                                                                           "Technician Auth"
+                                                                       ]
+                                                          }
+                                             },
+                  "/technician-auth/me":  {
+                                              "get":  {
+                                                          "operationId":  "TechnicianAuthController_me",
+                                                          "parameters":  [
+
+                                                                         ],
+                                                          "responses":  {
+                                                                            "401":  {
+                                                                                        "description":  "Unauthorized"
+                                                                                    }
+                                                                        },
+                                                          "security":  [
+                                                                           {
+                                                                               "technician-bearer":  [
+
+                                                                                                     ]
+                                                                           }
+                                                                       ],
+                                                          "summary":  "Get the logged-in technician and current session",
+                                                          "tags":  [
+                                                                       "Technician Auth"
+                                                                   ]
+                                                      }
+                                          },
+                  "/technician-auth/logout":  {
+                                                  "post":  {
+                                                               "operationId":  "TechnicianAuthController_logout",
+                                                               "parameters":  [
+
+                                                                              ],
+                                                               "responses":  {
+                                                                                 "401":  {
+                                                                                             "description":  "Unauthorized"
+                                                                                         }
+                                                                             },
+                                                               "security":  [
+                                                                                {
+                                                                                    "technician-bearer":  [
+
+                                                                                                          ]
+                                                                                }
+                                                                            ],
+                                                               "summary":  "Logout the current technician session",
+                                                               "tags":  [
+                                                                            "Technician Auth"
+                                                                        ]
+                                                           }
+                                              },
+                  "/shared-devices/me":  {
+                                             "get":  {
+                                                         "operationId":  "SharedDeviceController_me",
+                                                         "parameters":  [
+                                                                            {
+                                                                                "name":  "X-Device-Id",
+                                                                                "in":  "header",
+                                                                                "description":  "Signed request from the watch. The watch\u0027s device id.",
+                                                                                "required":  true,
+                                                                                "schema":  {
+                                                                                               "type":  "string"
+                                                                                           }
+                                                                            },
+                                                                            {
+                                                                                "name":  "X-Timestamp",
+                                                                                "in":  "header",
+                                                                                "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                "required":  true,
+                                                                                "schema":  {
+                                                                                               "type":  "string"
+                                                                                           }
+                                                                            },
+                                                                            {
+                                                                                "name":  "X-Nonce",
+                                                                                "in":  "header",
+                                                                                "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                "required":  true,
+                                                                                "schema":  {
+                                                                                               "type":  "string"
+                                                                                           }
+                                                                            },
+                                                                            {
+                                                                                "name":  "X-Signature",
+                                                                                "in":  "header",
+                                                                                "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                "required":  true,
+                                                                                "schema":  {
+                                                                                               "type":  "string"
+                                                                                           }
+                                                                            }
+                                                                        ],
+                                                         "responses":  {
+                                                                           "401":  {
+                                                                                       "description":  "Invalid device signature"
+                                                                                   }
+                                                                       },
+                                                         "summary":  "The watch checks that its signed requests are accepted and reads its own record",
+                                                         "tags":  [
+                                                                      "Technician Dispatcher - Shared Devices"
+                                                                  ]
+                                                     }
+                                         },
+                  "/shared-devices/enroll":  {
+                                                 "post":  {
+                                                              "operationId":  "SharedDeviceController_enroll",
+                                                              "parameters":  [
+
+                                                                             ],
+                                                              "requestBody":  {
+                                                                                  "required":  true,
+                                                                                  "content":  {
+                                                                                                  "application/json":  {
+                                                                                                                           "schema":  {
+                                                                                                                                          "$ref":  "#/components/schemas/EnrollDeviceDto"
+                                                                                                                                      }
+                                                                                                                       }
+                                                                                              }
+                                                                              },
+                                                              "responses":  {
+                                                                                "200":  {
+                                                                                            "description":  "Enrolled. The public key is stored; nothing secret is returned"
+                                                                                        },
+                                                                                "401":  {
+                                                                                            "description":  "Invalid or expired enrollment code"
+                                                                                        },
+                                                                                "429":  {
+                                                                                            "description":  "Too many failed attempts"
+                                                                                        }
+                                                                            },
+                                                              "summary":  "Watch registers its public key with the enrollment code (one time)",
+                                                              "tags":  [
+                                                                           "Technician Dispatcher - Shared Devices"
+                                                                       ]
+                                                          }
+                                             },
+                  "/shared-devices/pairings":  {
+                                                   "post":  {
+                                                                "operationId":  "DevicePairingController_create",
+                                                                "parameters":  [
+                                                                                   {
+                                                                                       "name":  "X-Device-Id",
+                                                                                       "in":  "header",
+                                                                                       "description":  "Signed request from the watch. The watch\u0027s device id.",
+                                                                                       "required":  true,
+                                                                                       "schema":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                   },
+                                                                                   {
+                                                                                       "name":  "X-Timestamp",
+                                                                                       "in":  "header",
+                                                                                       "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                       "required":  true,
+                                                                                       "schema":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                   },
+                                                                                   {
+                                                                                       "name":  "X-Nonce",
+                                                                                       "in":  "header",
+                                                                                       "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                       "required":  true,
+                                                                                       "schema":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                   },
+                                                                                   {
+                                                                                       "name":  "X-Signature",
+                                                                                       "in":  "header",
+                                                                                       "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                       "required":  true,
+                                                                                       "schema":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                   }
+                                                                               ],
+                                                                "responses":  {
+                                                                                  "201":  {
+                                                                                              "description":  ""
+                                                                                          },
+                                                                                  "401":  {
+                                                                                              "description":  "Invalid device signature"
+                                                                                          }
+                                                                              },
+                                                                "summary":  "Watch asks for a new pairing QR (valid 60 seconds). Any QR it still showed is cancelled",
+                                                                "tags":  [
+                                                                             "Technician Dispatcher - Shared Devices"
+                                                                         ]
+                                                            }
+                                               },
+                  "/shared-devices/pairings/{id}":  {
+                                                        "get":  {
+                                                                    "operationId":  "DevicePairingController_status",
+                                                                    "parameters":  [
+                                                                                       {
+                                                                                           "name":  "X-Device-Id",
+                                                                                           "in":  "header",
+                                                                                           "description":  "Signed request from the watch. The watch\u0027s device id.",
+                                                                                           "required":  true,
+                                                                                           "schema":  {
+                                                                                                          "type":  "string"
+                                                                                                      }
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "X-Timestamp",
+                                                                                           "in":  "header",
+                                                                                           "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                           "required":  true,
+                                                                                           "schema":  {
+                                                                                                          "type":  "string"
+                                                                                                      }
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "X-Nonce",
+                                                                                           "in":  "header",
+                                                                                           "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                           "required":  true,
+                                                                                           "schema":  {
+                                                                                                          "type":  "string"
+                                                                                                      }
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "X-Signature",
+                                                                                           "in":  "header",
+                                                                                           "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                           "required":  true,
+                                                                                           "schema":  {
+                                                                                                          "type":  "string"
+                                                                                                      }
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "id",
+                                                                                           "required":  true,
+                                                                                           "in":  "path",
+                                                                                           "schema":  {
+                                                                                                          "type":  "string"
+                                                                                                      }
+                                                                                       }
+                                                                                   ],
+                                                                    "responses":  {
+                                                                                      "200":  {
+                                                                                                  "description":  ""
+                                                                                              },
+                                                                                      "401":  {
+                                                                                                  "description":  "Invalid device signature"
+                                                                                              }
+                                                                                  },
+                                                                    "summary":  "Watch polls the status of its pairing: PENDING, APPROVED, CONSUMED, EXPIRED or CANCELLED",
+                                                                    "tags":  [
+                                                                                 "Technician Dispatcher - Shared Devices"
+                                                                             ]
+                                                                }
+                                                    },
+                  "/shared-devices/pairings/{id}/exchange":  {
+                                                                 "post":  {
+                                                                              "operationId":  "DevicePairingController_exchange",
+                                                                              "parameters":  [
+                                                                                                 {
+                                                                                                     "name":  "X-Device-Id",
+                                                                                                     "in":  "header",
+                                                                                                     "description":  "Signed request from the watch. The watch\u0027s device id.",
+                                                                                                     "required":  true,
+                                                                                                     "schema":  {
+                                                                                                                    "type":  "string"
+                                                                                                                }
+                                                                                                 },
+                                                                                                 {
+                                                                                                     "name":  "X-Timestamp",
+                                                                                                     "in":  "header",
+                                                                                                     "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                                     "required":  true,
+                                                                                                     "schema":  {
+                                                                                                                    "type":  "string"
+                                                                                                                }
+                                                                                                 },
+                                                                                                 {
+                                                                                                     "name":  "X-Nonce",
+                                                                                                     "in":  "header",
+                                                                                                     "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                                     "required":  true,
+                                                                                                     "schema":  {
+                                                                                                                    "type":  "string"
+                                                                                                                }
+                                                                                                 },
+                                                                                                 {
+                                                                                                     "name":  "X-Signature",
+                                                                                                     "in":  "header",
+                                                                                                     "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                                     "required":  true,
+                                                                                                     "schema":  {
+                                                                                                                    "type":  "string"
+                                                                                                                }
+                                                                                                 },
+                                                                                                 {
+                                                                                                     "name":  "id",
+                                                                                                     "required":  true,
+                                                                                                     "in":  "path",
+                                                                                                     "schema":  {
+                                                                                                                    "type":  "string"
+                                                                                                                }
+                                                                                                 }
+                                                                                             ],
+                                                                              "responses":  {
+                                                                                                "200":  {
+                                                                                                            "description":  "Session token for the technician"
+                                                                                                        },
+                                                                                                "401":  {
+                                                                                                            "description":  "Invalid device signature"
+                                                                                                        },
+                                                                                                "409":  {
+                                                                                                            "description":  "Pairing is not approved, expired, or already used"
+                                                                                                        }
+                                                                                            },
+                                                                              "summary":  "Watch exchanges an approved pairing for a session of the technician who approved it",
+                                                                              "tags":  [
+                                                                                           "Technician Dispatcher - Shared Devices"
+                                                                                       ]
+                                                                          }
+                                                             },
+                  "/technicians/me/pairings/preview":  {
+                                                           "get":  {
+                                                                       "operationId":  "TechnicianPairingController_preview",
+                                                                       "parameters":  [
+                                                                                          {
+                                                                                              "name":  "code",
+                                                                                              "required":  true,
+                                                                                              "in":  "query",
+                                                                                              "description":  "The `code` value from the scanned watch QR payload",
+                                                                                              "schema":  {
+                                                                                                             "type":  "string"
+                                                                                                         }
+                                                                                          }
+                                                                                      ],
+                                                                       "responses":  {
+                                                                                         "401":  {
+                                                                                                     "description":  "Unauthorized"
+                                                                                                 },
+                                                                                         "404":  {
+                                                                                                     "description":  "Pairing code is invalid or expired"
+                                                                                                 }
+                                                                                     },
+                                                                       "security":  [
+                                                                                        {
+                                                                                            "technician-bearer":  [
+
+                                                                                                                  ]
+                                                                                        }
+                                                                                    ],
+                                                                       "summary":  "Show which watch a scanned QR belongs to, before approving",
+                                                                       "tags":  [
+                                                                                    "Technician Dispatcher - Shared Devices"
+                                                                                ]
+                                                                   }
+                                                       },
+                  "/technicians/me/pairings/approve":  {
+                                                           "post":  {
+                                                                        "operationId":  "TechnicianPairingController_approve",
+                                                                        "parameters":  [
+
+                                                                                       ],
+                                                                        "requestBody":  {
+                                                                                            "required":  true,
+                                                                                            "content":  {
+                                                                                                            "application/json":  {
+                                                                                                                                     "schema":  {
+                                                                                                                                                    "$ref":  "#/components/schemas/ApprovePairingDto"
+                                                                                                                                                }
+                                                                                                                                 }
+                                                                                                        }
+                                                                                        },
+                                                                        "responses":  {
+                                                                                          "200":  {
+                                                                                                      "description":  "Approved. The watch exchanges the pairing for a session"
+                                                                                                  },
+                                                                                          "401":  {
+                                                                                                      "description":  "Unauthorized"
+                                                                                                  },
+                                                                                          "404":  {
+                                                                                                      "description":  "Pairing code is invalid or expired"
+                                                                                                  }
+                                                                                      },
+                                                                        "security":  [
+                                                                                         {
+                                                                                             "technician-bearer":  [
+
+                                                                                                                   ]
+                                                                                         }
+                                                                                     ],
+                                                                        "summary":  "Approve the pairing so the watch can log in as this technician",
+                                                                        "tags":  [
+                                                                                     "Technician Dispatcher - Shared Devices"
+                                                                                 ]
+                                                                    }
+                                                       },
+                  "/technicians/me/work-orders":  {
+                                                      "get":  {
+                                                                  "description":  "display_status is WAITING, IN_PROGRESS, COMPLETED, CANCELLED or DECLINED. Only the logged-in technician jobs are returned",
+                                                                  "operationId":  "TechnicianWorkOrderController_list",
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "X-Device-Id",
+                                                                                         "in":  "header",
+                                                                                         "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                         "required":  false,
+                                                                                         "schema":  {
+                                                                                                        "type":  "string"
+                                                                                                    }
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "X-Timestamp",
+                                                                                         "in":  "header",
+                                                                                         "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                         "required":  false,
+                                                                                         "schema":  {
+                                                                                                        "type":  "string"
+                                                                                                    }
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "X-Nonce",
+                                                                                         "in":  "header",
+                                                                                         "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                         "required":  false,
+                                                                                         "schema":  {
+                                                                                                        "type":  "string"
+                                                                                                    }
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "X-Signature",
+                                                                                         "in":  "header",
+                                                                                         "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                         "required":  false,
+                                                                                         "schema":  {
+                                                                                                        "type":  "string"
+                                                                                                    }
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "status",
+                                                                                         "required":  false,
+                                                                                         "in":  "query",
+                                                                                         "description":  "Comma separated: WAITING, IN_PROGRESS, COMPLETED, CANCELLED, DECLINED. Leave empty for all",
+                                                                                         "schema":  {
+                                                                                                        "example":  "WAITING,IN_PROGRESS",
+                                                                                                        "type":  "string"
+                                                                                                    }
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "from",
+                                                                                         "required":  false,
+                                                                                         "in":  "query",
+                                                                                         "description":  "Jobs created on or after this day (YYYY-MM-DD)",
+                                                                                         "schema":  {
+                                                                                                        "example":  "2026-11-01",
+                                                                                                        "type":  "string"
+                                                                                                    }
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "to",
+                                                                                         "required":  false,
+                                                                                         "in":  "query",
+                                                                                         "description":  "Jobs created on or before this day (YYYY-MM-DD)",
+                                                                                         "schema":  {
+                                                                                                        "example":  "2026-11-30",
+                                                                                                        "type":  "string"
+                                                                                                    }
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "page",
+                                                                                         "required":  false,
+                                                                                         "in":  "query",
+                                                                                         "schema":  {
+                                                                                                        "default":  1,
+                                                                                                        "example":  1,
+                                                                                                        "type":  "number"
+                                                                                                    }
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "perPage",
+                                                                                         "required":  false,
+                                                                                         "in":  "query",
+                                                                                         "description":  "At most 100",
+                                                                                         "schema":  {
+                                                                                                        "default":  20,
+                                                                                                        "example":  20,
+                                                                                                        "type":  "number"
+                                                                                                    }
+                                                                                     }
+                                                                                 ],
+                                                                  "responses":  {
+                                                                                    "200":  {
+                                                                                                "description":  ""
+                                                                                            },
+                                                                                    "401":  {
+                                                                                                "description":  "Unauthorized"
+                                                                                            },
+                                                                                    "404":  {
+                                                                                                "description":  "Work order not found"
+                                                                                            },
+                                                                                    "409":  {
+                                                                                                "description":  "Not checked in, unavailable, or the work order was already answered"
+                                                                                            }
+                                                                                },
+                                                                  "security":  [
+                                                                                   {
+                                                                                       "technician-bearer":  [
+
+                                                                                                             ]
+                                                                                   }
+                                                                               ],
+                                                                  "summary":  "My jobs, newest first, with paging and a status filter",
+                                                                  "tags":  [
+                                                                               "Technician Dispatcher - Technician Mobile"
+                                                                           ]
+                                                              }
+                                                  },
+                  "/technicians/me/work-orders/{id}":  {
+                                                           "get":  {
+                                                                       "operationId":  "TechnicianWorkOrderController_detail",
+                                                                       "parameters":  [
+                                                                                          {
+                                                                                              "name":  "X-Device-Id",
+                                                                                              "in":  "header",
+                                                                                              "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                              "required":  false,
+                                                                                              "schema":  {
+                                                                                                             "type":  "string"
+                                                                                                         }
+                                                                                          },
+                                                                                          {
+                                                                                              "name":  "X-Timestamp",
+                                                                                              "in":  "header",
+                                                                                              "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                              "required":  false,
+                                                                                              "schema":  {
+                                                                                                             "type":  "string"
+                                                                                                         }
+                                                                                          },
+                                                                                          {
+                                                                                              "name":  "X-Nonce",
+                                                                                              "in":  "header",
+                                                                                              "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                              "required":  false,
+                                                                                              "schema":  {
+                                                                                                             "type":  "string"
+                                                                                                         }
+                                                                                          },
+                                                                                          {
+                                                                                              "name":  "X-Signature",
+                                                                                              "in":  "header",
+                                                                                              "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                              "required":  false,
+                                                                                              "schema":  {
+                                                                                                             "type":  "string"
+                                                                                                         }
+                                                                                          },
+                                                                                          {
+                                                                                              "name":  "id",
+                                                                                              "required":  true,
+                                                                                              "in":  "path",
+                                                                                              "schema":  {
+                                                                                                             "type":  "string"
+                                                                                                         }
+                                                                                          }
+                                                                                      ],
+                                                                       "responses":  {
+                                                                                         "200":  {
+                                                                                                     "description":  ""
+                                                                                                 },
+                                                                                         "401":  {
+                                                                                                     "description":  "Unauthorized"
+                                                                                                 },
+                                                                                         "404":  {
+                                                                                                     "description":  "Work order not found"
+                                                                                                 },
+                                                                                         "409":  {
+                                                                                                     "description":  "Not checked in, unavailable, or the work order was already answered"
+                                                                                                 }
+                                                                                     },
+                                                                       "security":  [
+                                                                                        {
+                                                                                            "technician-bearer":  [
+
+                                                                                                                  ]
+                                                                                        }
+                                                                                    ],
+                                                                       "summary":  "One of my jobs, with the machine and repair details",
+                                                                       "tags":  [
+                                                                                    "Technician Dispatcher - Technician Mobile"
+                                                                                ]
+                                                                   }
+                                                       },
+                  "/technicians/me/work-orders/{id}/accept":  {
+                                                                  "post":  {
+                                                                               "operationId":  "TechnicianWorkOrderController_accept",
+                                                                               "parameters":  [
+                                                                                                  {
+                                                                                                      "name":  "X-Device-Id",
+                                                                                                      "in":  "header",
+                                                                                                      "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                                      "required":  false,
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "X-Timestamp",
+                                                                                                      "in":  "header",
+                                                                                                      "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                                      "required":  false,
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "X-Nonce",
+                                                                                                      "in":  "header",
+                                                                                                      "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                                      "required":  false,
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "X-Signature",
+                                                                                                      "in":  "header",
+                                                                                                      "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                                      "required":  false,
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "id",
+                                                                                                      "required":  true,
+                                                                                                      "in":  "path",
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  }
+                                                                                              ],
+                                                                               "responses":  {
+                                                                                                 "200":  {
+                                                                                                             "description":  ""
+                                                                                                         },
+                                                                                                 "401":  {
+                                                                                                             "description":  "Unauthorized"
+                                                                                                         },
+                                                                                                 "404":  {
+                                                                                                             "description":  "Work order not found"
+                                                                                                         },
+                                                                                                 "409":  {
+                                                                                                             "description":  "Not checked in, unavailable, or the work order was already answered"
+                                                                                                         }
+                                                                                             },
+                                                                               "security":  [
+                                                                                                {
+                                                                                                    "technician-bearer":  [
+
+                                                                                                                          ]
+                                                                                                }
+                                                                                            ],
+                                                                               "summary":  "Accept an assignment",
+                                                                               "tags":  [
+                                                                                            "Technician Dispatcher - Technician Mobile"
+                                                                                        ]
+                                                                           }
+                                                              },
+                  "/technicians/me/work-orders/{id}/decline":  {
+                                                                   "post":  {
+                                                                                "operationId":  "TechnicianWorkOrderController_decline",
+                                                                                "parameters":  [
+                                                                                                   {
+                                                                                                       "name":  "X-Device-Id",
+                                                                                                       "in":  "header",
+                                                                                                       "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                                       "required":  false,
+                                                                                                       "schema":  {
+                                                                                                                      "type":  "string"
+                                                                                                                  }
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "X-Timestamp",
+                                                                                                       "in":  "header",
+                                                                                                       "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                                       "required":  false,
+                                                                                                       "schema":  {
+                                                                                                                      "type":  "string"
+                                                                                                                  }
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "X-Nonce",
+                                                                                                       "in":  "header",
+                                                                                                       "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                                       "required":  false,
+                                                                                                       "schema":  {
+                                                                                                                      "type":  "string"
+                                                                                                                  }
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "X-Signature",
+                                                                                                       "in":  "header",
+                                                                                                       "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                                       "required":  false,
+                                                                                                       "schema":  {
+                                                                                                                      "type":  "string"
+                                                                                                                  }
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "id",
+                                                                                                       "required":  true,
+                                                                                                       "in":  "path",
+                                                                                                       "schema":  {
+                                                                                                                      "type":  "string"
+                                                                                                                  }
+                                                                                                   }
+                                                                                               ],
+                                                                                "responses":  {
+                                                                                                  "200":  {
+                                                                                                              "description":  ""
+                                                                                                          },
+                                                                                                  "401":  {
+                                                                                                              "description":  "Unauthorized"
+                                                                                                          },
+                                                                                                  "404":  {
+                                                                                                              "description":  "Work order not found"
+                                                                                                          },
+                                                                                                  "409":  {
+                                                                                                              "description":  "Not checked in, unavailable, or the work order was already answered"
+                                                                                                          }
+                                                                                              },
+                                                                                "security":  [
+                                                                                                 {
+                                                                                                     "technician-bearer":  [
+
+                                                                                                                           ]
+                                                                                                 }
+                                                                                             ],
+                                                                                "summary":  "Decline an assignment. This also checks the technician out",
+                                                                                "tags":  [
+                                                                                             "Technician Dispatcher - Technician Mobile"
+                                                                                         ]
+                                                                            }
+                                                               },
+                  "/technicians/me/work-orders/{id}/cancel":  {
+                                                                  "post":  {
+                                                                               "operationId":  "TechnicianWorkOrderController_cancel",
+                                                                               "parameters":  [
+                                                                                                  {
+                                                                                                      "name":  "X-Device-Id",
+                                                                                                      "in":  "header",
+                                                                                                      "description":  "Only for a watch session. The phone sends none of these. The watch\u0027s device id.",
+                                                                                                      "required":  false,
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "X-Timestamp",
+                                                                                                      "in":  "header",
+                                                                                                      "description":  "Unix time in seconds. Must be within 60 s of the server.",
+                                                                                                      "required":  false,
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "X-Nonce",
+                                                                                                      "in":  "header",
+                                                                                                      "description":  "Random value, 16 to 64 characters, never reused.",
+                                                                                                      "required":  false,
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "X-Signature",
+                                                                                                      "in":  "header",
+                                                                                                      "description":  "Base64 signature of the request, made with the watch private key.",
+                                                                                                      "required":  false,
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "id",
+                                                                                                      "required":  true,
+                                                                                                      "in":  "path",
+                                                                                                      "schema":  {
+                                                                                                                     "type":  "string"
+                                                                                                                 }
+                                                                                                  }
+                                                                                              ],
+                                                                               "responses":  {
+                                                                                                 "200":  {
+                                                                                                             "description":  ""
+                                                                                                         },
+                                                                                                 "401":  {
+                                                                                                             "description":  "Unauthorized"
+                                                                                                         },
+                                                                                                 "404":  {
+                                                                                                             "description":  "Work order not found"
+                                                                                                         },
+                                                                                                 "409":  {
+                                                                                                             "description":  "Not checked in, unavailable, or the work order was already answered"
+                                                                                                         }
+                                                                                             },
+                                                                               "security":  [
+                                                                                                {
+                                                                                                    "technician-bearer":  [
+
+                                                                                                                          ]
+                                                                                                }
+                                                                                            ],
+                                                                               "summary":  "Cancel an assignment that was accepted earlier. This also checks the technician out",
+                                                                               "tags":  [
+                                                                                            "Technician Dispatcher - Technician Mobile"
+                                                                                        ]
+                                                                           }
+                                                              }
+              },
+    "components":  {
+                       "schemas":  {
+                                       "TechnicianLoginDto":  {
+                                                                  "type":  "object",
+                                                                  "properties":  {
+                                                                                     "kpk":  {
+                                                                                                 "type":  "string",
+                                                                                                 "example":  "12345",
+                                                                                                 "description":  "Technician KPK (idkpk)"
+                                                                                             },
+                                                                                     "password":  {
+                                                                                                      "type":  "string",
+                                                                                                      "example":  "6281234567890",
+                                                                                                      "description":  "Temporary password: the technician phone number (62... or 0... format)"
+                                                                                                  }
+                                                                                 },
+                                                                  "required":  [
+                                                                                   "kpk",
+                                                                                   "password"
+                                                                               ]
+                                                              },
+                                       "EnrollDeviceDto":  {
+                                                               "type":  "object",
+                                                               "properties":  {
+                                                                                  "code":  {
+                                                                                               "type":  "string",
+                                                                                               "example":  "K7M2Q9XD4B",
+                                                                                               "description":  "Single-use enrollment code from the admin dashboard"
+                                                                                           },
+                                                                                  "public_key":  {
+                                                                                                     "type":  "string",
+                                                                                                     "description":  "The watch public key: base64 of the DER SubjectPublicKeyInfo (Android PublicKey.getEncoded()). EC P-256 or RSA 2048+"
+                                                                                                 },
+                                                                                  "signature":  {
+                                                                                                    "type":  "string",
+                                                                                                    "description":  "Base64 signature made with the private key over: \"enroll\", \"v1\", the code exactly as sent here, and the public key SHA-256 fingerprint, joined by newlines. Proves the watch holds the private key"
+                                                                                                }
+                                                                              },
+                                                               "required":  [
+                                                                                "code",
+                                                                                "public_key",
+                                                                                "signature"
+                                                                            ]
+                                                           },
+                                       "ApprovePairingDto":  {
+                                                                 "type":  "object",
+                                                                 "properties":  {
+                                                                                    "code":  {
+                                                                                                 "type":  "string",
+                                                                                                 "description":  "The `code` value from the scanned watch QR payload"
+                                                                                             }
+                                                                                },
+                                                                 "required":  [
+                                                                                  "code"
+                                                                              ]
+                                                             }
+                                   },
+                       "securitySchemes":  {
+                                               "bearer":  {
+                                                              "scheme":  "bearer",
+                                                              "bearerFormat":  "JWT",
+                                                              "type":  "http"
+                                                          },
+                                               "basic":  {
+                                                             "type":  "http",
+                                                             "scheme":  "basic"
+                                                         },
+                                               "technician-bearer":  {
+                                                                         "scheme":  "bearer",
+                                                                         "bearerFormat":  "JWT",
+                                                                         "type":  "http",
+                                                                         "description":  "Technician session token from POST /technician-auth/login or a watch pairing exchange. A watch session also needs the X-Device-Id, X-Timestamp, X-Nonce and X-Signature headers (generate them with the device simulator)"
+                                                                     }
+                                           }
+                   }
+}

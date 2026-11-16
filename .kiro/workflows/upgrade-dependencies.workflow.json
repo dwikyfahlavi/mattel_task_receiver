@@ -1,0 +1,24 @@
+{
+  "name": "upgrade-dependencies",
+  "description": "Upgrade workspace dependencies to the newest resolvable versions, fix breakages, and verify with the full gate plus Android builds.",
+  "inputs": {
+    "scope": {
+      "description": "Which packages to upgrade: `all`, or a comma-separated list such as `firebase_messaging,flutter_local_notifications`.",
+      "default": "all"
+    }
+  },
+  "steps": [
+    {
+      "type": "step",
+      "id": "upgrade",
+      "agent": "wf-coder",
+      "prompt": "Upgrade dependencies ({{scope}}) in the Mattel Task Receiver monorepo at the workspace root. Follow .kiro/skills/upgrade-dependencies/SKILL.md exactly.\n\n1. `fvm flutter pub outdated` at the root and record current vs latest.\n2. Upgrade with `fvm flutter pub add <pkg>` (or `fvm flutter pub upgrade --major-versions` for `all`) inside the member packages that declare them. Restore every touched member's analysis_options.yaml to exactly `include: ../../analysis_options.yaml`.\n3. Read CHANGELOGs of every package whose major/minor changed; apply required code, Gradle (apps/*/android) or manifest changes. Verify any Gradle plugin version exists on Google Maven / Maven Central before using it.\n4. `make codegen l10n`, then `make analyze test`. Fix failures in the code, not by loosening tests or lints.\n5. `make build-debug APP=watch ENV=dev` and `make build-debug APP=mobile ENV=dev`.\n6. Add a docs/DECISIONS.md entry for any deliberate deviation (for example a deprecated API kept for contract reasons).\n\nCommit nothing. Report: upgraded packages with old -> new versions, code changes made, anything held back and why, and the gate results."
+    },
+    {
+      "type": "step",
+      "id": "verify",
+      "agent": "wf-code-reviewer",
+      "prompt": "Review the uncommitted dependency upgrade in the Mattel Task Receiver workspace (`git diff`). Re-run `make verify` and both `make build-debug` targets yourself. Block if any gate fails, if a changelog breaking change was not handled, if lints/tests were weakened, or if the watch app gained camera/ML Kit dependencies. Write the verdict."
+    }
+  ]
+}

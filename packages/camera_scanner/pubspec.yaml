@@ -1,0 +1,24 @@
+name: camera_scanner
+description: "Camera QR scanning (permission in context, QR only) for the apps. Feature packages never depend on it; they receive a scan callback."
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.13.4
+  flutter: ">=3.38.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  lucide_icons_flutter: ^4.0.2
+  mobile_scanner: ^7.5.0
+  permission_handler: ^13.0.2
+  core:
+    path: ../core
+  ui_kit:
+    path: ../ui_kit
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

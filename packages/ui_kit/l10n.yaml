@@ -1,0 +1,9 @@
+# All UI copy lives in lib/l10n/app_id.arb (Indonesian, doc A.8).
+# Regenerate with `make l10n` (or `flutter gen-l10n` in this package).
+arb-dir: lib/l10n
+template-arb-file: app_id.arb
+output-dir: lib/l10n/generated
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+preferred-supported-locales: [id]
+nullable-getter: false

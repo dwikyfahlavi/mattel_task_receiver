@@ -1,0 +1,13 @@
+{
+  "name": "verify-pre-pr",
+  "description": "Mattel Task Receiver pre-PR gate: codegen, l10n, format, analyze, tests and Android debug builds of both apps. Fails closed on the first failing gate.",
+  "inputs": {},
+  "steps": [
+    {
+      "type": "step",
+      "id": "verify",
+      "agent": "wf-coder",
+      "prompt": "You are verifying the Mattel Task Receiver Flutter monorepo at the workspace root (the directory with the root pubspec.yaml workspace and the Makefile). Use the FVM SDK (`fvm flutter`, `fvm dart`); the Makefile already does. On Windows run make from Git Bash or PowerShell (make is installed).\n\nRun these gates IN ORDER and stop at the first failure, reporting the gate, the command and the relevant output:\n1. `make bootstrap`\n2. `make codegen` (freezed, json_serializable, retrofit, injectable, drift in every package).\n3. `make l10n`.\n4. `git status --porcelain -- '*.g.dart' '*.freezed.dart' '*.config.dart' '*.module.dart' packages/ui_kit/lib/l10n/generated` must be empty after codegen; if not, report which generated files were stale (they must be committed).\n5. `make analyze` (format check + `flutter analyze` per package). Any issue fails.\n6. `make test` (all unit, bloc, widget and golden tests).\n7. `make build-debug APP=watch ENV=dev` and `make build-debug APP=mobile ENV=dev`.\n8. Confirm the watch debug APK (`apps/app_watch/build/app/outputs/flutter-apk/app-dev-debug.apk`) contains no entries matching `mlkit|barcode|camera` (doc 6).\n\nDo NOT change application code to make a gate pass. Only report. Report success only if every gate passes."
+    }
+  ]
+}

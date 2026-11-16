@@ -1,0 +1,13 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # API payloads are snake_case (doc 9.4 / 21).
+          field_rename: snake
+          explicit_to_json: true
+          include_if_null: false
+      drift_dev:
+        options:
+          # ISO-8601 text keeps UTC and millisecond precision.
+          store_date_time_values_as_text: true
