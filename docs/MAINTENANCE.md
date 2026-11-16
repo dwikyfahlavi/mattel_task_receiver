@@ -113,7 +113,7 @@ in sync, or use only Firestore if the project stays on the Spark plan. Values ap
 | Key | Example | Default |
 | --- | --- | --- |
 | `vendor_technician_login`, `auto_logout_mobile`, `in_app_apk_update` | `true` | `false` |
-| `task_delivery` | `socket`, `fcm`, `both` | `socket` |
+| `task_delivery` (trade-offs: [DELIVERY_SOCKET_VS_FCM.md](DELIVERY_SOCKET_VS_FCM.md)) | `socket`, `fcm`, `both` | `socket` |
 | `shift_schedule` (Asia/Jakarta) | `{"S1":{"start":"07:00","end":"15:00"},"S2":{"start":"15:00","end":"23:00"},"S3":{"start":"23:00","end":"07:00"}}` | same |
 | `shift_end_grace_minutes` | `30` | `30` |
 | `watch_min_version`, `watch_latest_version`, `mobile_…` | `1.4.0` | none |
