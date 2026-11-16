@@ -16,8 +16,12 @@ The app supports three delivery modes, switched with the remote setting `task_de
 ## 1. How each one works
 
 **Socket.** The app keeps its own TCP/TLS connection open all shift. To keep it alive, Socket.IO
-exchanges a small heartbeat (ping/pong). Its default server ping interval is 25 s; the backend's actual
-value is unknown, so ask the backend team. Each heartbeat can wake the CPU and the Wi-Fi radio. To stop
+exchanges a small heartbeat (ping/pong). The **server** sets it; the app only follows. The dev backend
+uses the Socket.IO defaults, `pingInterval: 25000` and `pingTimeout: 20000` (read from its handshake:
+`curl "https://api.mattel-dev.altimeda.com/socket.io/?EIO=4&transport=polling"`). Changing it is a backend
+change (Socket.IO server / NestJS gateway options), with no app release needed. A longer interval means fewer
+wakeups but slower detection of a dead connection (up to interval + timeout). Each heartbeat can wake the
+CPU and the Wi-Fi radio. To stop
 Android from killing the app with the screen off, a foreground service runs (type `specialUse`, with an
 ongoing "Mattel Task aktif" notification).
 
