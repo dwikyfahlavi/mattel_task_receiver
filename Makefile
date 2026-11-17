@@ -139,7 +139,7 @@ run-watch: ## Shortcut: run the watch app (ENV=dev by default)
 	$(MAKE) run APP=watch
 
 run-mobile: ## Shortcut: run the mobile app (ENV=dev by default)
-	$(MAKE) run APP=mobile
+	$(MAKE) run APP=mobile	
 
 build-debug: check-args ## Debug APK: make build-debug APP=watch ENV=dev
 	cd $(APP_DIR) && $(FLUTTER) build apk --debug --flavor $(ENV) -t $(ENTRY) $(DEFINES)
@@ -168,9 +168,12 @@ logcat: ## Show Flutter and FCM logs from the device
 # `fvm flutter --version`) so releases build with the tested SDK.
 # Patches always reuse the Flutter version of their release.
 SHOREBIRD_FLUTTER ?= 3.47.5
+# apk for MDM / direct install (default), aab for the Play Store.
+SHOREBIRD_ARTIFACT ?= apk
 
 shorebird-release: check-args ## Create a Shorebird release: make shorebird-release APP=watch ENV=prod
-	cd $(APP_DIR) && shorebird release android --flutter-version=$(SHOREBIRD_FLUTTER) --flavor $(ENV) -t $(ENTRY) $(ARCH_FLAG) -- $(DEFINES)
+	cd $(APP_DIR) && shorebird release android --flutter-version=$(SHOREBIRD_FLUTTER) --artifact $(SHOREBIRD_ARTIFACT) --flavor $(ENV) -t $(ENTRY) $(ARCH_FLAG) -- $(DEFINES)
+	@echo "Output: $(APP_DIR)/build/app/outputs/$(if $(filter apk,$(SHOREBIRD_ARTIFACT)),flutter-apk/app-$(ENV)-release.apk,bundle/$(ENV)Release/app-$(ENV)-release.aab)"
 
 shorebird-patch: check-args ## Push a Shorebird patch: make shorebird-patch APP=watch ENV=prod
 	cd $(APP_DIR) && shorebird patch android --flavor $(ENV) -t $(ENTRY) -- $(DEFINES)
